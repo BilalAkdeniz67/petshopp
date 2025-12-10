@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetShop - Ürünler</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        header, section, footer {
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: slideDown 0.8s ease-out forwards;
+        }
+
+        header {
+            animation-delay: 0.1s;
+        }
+
+        section {
+            animation-delay: 0.3s;
+        }
+
+        footer {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1% 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            margin-left: 2%;
+        }
+
+        .logo img {
+            height: 70px;
+            width: auto;
+            transition: transform 0.9s ease; 
+        }
+
+        .logo:hover {
+            cursor: pointer;
+        }
+
+        .logo:hover img {
+            transform: scale(1.1);
+        }
+
+        nav {
+            margin-left: auto;
+            margin-right: 2%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2vw;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: clamp(12px, 1.2vw, 16px);
+        }
+
+        /* DROPDOWN MENU */
+        .urunsecme {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #444;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .urunsecme:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+            margin: 0;
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #555;
+            padding-left: 25px;
+        }
+
+        .urunsecme > a {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .urunsecme > a::after {
+            content: '▼';
+            font-size: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .urunsecme:hover > a::after {
+            transform: rotate(180deg);
+        }
+        
+        .urunler {
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin: 10px;
+            width: 280px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            background-color: white; 
+        }
+        
+        .urunler:hover {
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        .urunler:hover img {
+            transform: scale(1.1);
+        }
+
+        .urunler img {
+            width: 100%;
+            max-width: 260px;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.9s ease;
+        }
+
+        .urunler p {
+            margin-top: 15px;
+            font-size: clamp(14px, 1.5vw, 16px);
+            font-weight: bold;
+            text-align: center;
+            padding: 0 5%;
+        }
+        
+        section {
+            display: flex;
+            justify-content: center; 
+            align-items: stretch;
+            padding: 2%;
+            flex-wrap: wrap;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        section a {
+            display: flex;
+        }
+
+        footer p {
+            text-align: center;
+            padding: 2%;
+            background-color: #333;
+            color: white;
+            font-size: clamp(12px, 1.2vw, 14px);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 3% 0;
+            }
+
+            .logo {
+                margin: 0 0 2% 0;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            nav {
+                margin: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            nav ul {
+                justify-content: center;
+                gap: 3vw;
+            }
+
+            .dropdown-menu {
+                left: 50%;
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            .urunsecme:hover .dropdown-menu {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            .urunler {
+                width: calc(50% - 20px);
+                min-width: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 40px;
+            }
+
+            .urunler {
+                width: calc(100% - 20px);
+                max-width: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="resimler/PhotoshopExtension_Image.png" alt="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="anasayfa.html">Anasayfa</a></li>
+                <li class="urunsecme">
+                    <a href="#">Ürünler</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="kedimamasi.html">🐱 Kedi Maması</a></li>
+                        <li><a href="kopekmamasi.html">🐶 Köpek Maması</a></li>
+                        <li><a href="kedikumu.html">🪣 Kedi Kumu</a></li>
+                        <li><a href="kusyemi.html">🦜 Kuş Yemi</a></li>
+                    </ul>
+                </li>
+                <li><a href="iletişim.html">İletişim</a></li>
+                <li><a href="hakkimizda.html">Hakkımızda</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        
+        <a href="KediMamasiUrunler/urun1.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="resimler/indir.png" alt="ürün1">
+                <p>
+                    Acana Indoor Entree Sterilised Kısırlaştırılmış Kedi Maması 1,8 kg
+                </p>
+            </div>
+        </a>
+
+        <a href="KediMamasiUrunler/urun2.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler"> 
+                <img src="resimler/indir (1).png" alt="ürün2">
+                <p>
+                    Acana Pacifica Balıklı Tahılsız Kuru Kedi Maması 4,5 kg
+                </p>
+            </div>
+        </a>
+        
+        <a href="KediMamasiUrunler/urun3.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="resimler/acana-first-feast-tavuklu-ve-balikli-y-9d564d.jpg" alt="ürün3">
+                <p>
+                    Acana First Feast Tavuklu ve Balıklı Yavru Kedi Maması 1,8 kg
+                </p>
+            </div>
+        </a>
+        <a href="KediMamasiUrunler/urun4.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="resimler/acana-homestead-harvest-tavuklu-yetisk-d058e8.jpg" alt="ürün4">
+                <p>
+                    Acana Homestead Harvest Tavuklu Yetişkin Kuru Kedi Maması 4,5 kg
+                </p>
+            </div>
+        </a>
+        <a href="KediMamasiUrunler/urun7.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="resimler/pro-plan-elegant-optiderma-somonlu-yet-8-3125.jpg" alt="ürün7">
+                <p>
+                    Pro Plan Elegant Optiderma Somonlu Yetişkin Kedi Maması 10 kg
+                </p>
+            </div>
+        </a>
+        <a href="KediMamasiUrunler/urun8.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="resimler/pro-plan-adult-somonlu-yetiskin-kedi-m-0d-072.jpg" alt="ürün8">
+                <p>
+                    Pro Plan Adult Somonlu Yetişkin Kedi Maması 3 kg
+                </p>
+            </div>
+        </a>
+    </section>
+    <footer>
+        <p>&copy; 2025 PetShop. Tüm hakları saklıdır.</p>
+    </footer>
+</body>
+</html>

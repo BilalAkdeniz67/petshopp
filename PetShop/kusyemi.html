@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetShop - Ürünler</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        header, section, footer {
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: slideDown 0.8s ease-out forwards;
+        }
+
+        header {
+            animation-delay: 0.1s;
+        }
+
+        section {
+            animation-delay: 0.3s;
+        }
+
+        footer {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1% 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            margin-left: 2%;
+        }
+
+        .logo img {
+            height: 70px;
+            width: auto;
+            transition: transform 0.9s ease; 
+        }
+
+        .logo:hover {
+            cursor: pointer;
+        }
+
+        .logo:hover img {
+            transform: scale(1.1);
+        }
+
+        nav {
+            margin-left: auto;
+            margin-right: 2%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2vw;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: clamp(12px, 1.2vw, 16px);
+        }
+
+        /* DROPDOWN MENU */
+        .urunsecme {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #444;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .urunsecme:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+            margin: 0;
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #555;
+            padding-left: 25px;
+        }
+
+        .urunsecme > a {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .urunsecme > a::after {
+            content: '▼';
+            font-size: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .urunsecme:hover > a::after {
+            transform: rotate(180deg);
+        }
+        
+        .urunler {
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin: 10px;
+            width: 280px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            background-color: white; 
+        }
+        
+        .urunler:hover {
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        .urunler:hover img {
+            transform: scale(1.1);
+        }
+
+        .urunler img {
+            width: 100%;
+            max-width: 260px;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.9s ease;
+        }
+
+        .urunler p {
+            margin-top: 15px;
+            font-size: clamp(14px, 1.5vw, 16px);
+            font-weight: bold;
+            text-align: center;
+            padding: 0 5%;
+        }
+        
+        section {
+            display: flex;
+            justify-content: center; 
+            align-items: stretch;
+            padding: 2%;
+            flex-wrap: wrap;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        section a {
+            display: flex;
+        }
+
+        footer p {
+            text-align: center;
+            padding: 2%;
+            background-color: #333;
+            color: white;
+            font-size: clamp(12px, 1.2vw, 14px);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 3% 0;
+            }
+
+            .logo {
+                margin: 0 0 2% 0;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            nav {
+                margin: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            nav ul {
+                justify-content: center;
+                gap: 3vw;
+            }
+
+            .dropdown-menu {
+                left: 50%;
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            .urunsecme:hover .dropdown-menu {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            .urunler {
+                width: calc(50% - 20px);
+                min-width: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 40px;
+            }
+
+            .urunler {
+                width: calc(100% - 20px);
+                max-width: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="resimler/PhotoshopExtension_Image.png" alt="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="anasayfa.html">Anasayfa</a></li>
+                <li class="urunsecme">
+                    <a href="#">Ürünler</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="kedimamasi.html">🐱 Kedi Maması</a></li>
+                        <li><a href="kopekmamasi.html">🐶 Köpek Maması</a></li>
+                        <li><a href="kedikumu.html">🪣 Kedi Kumu</a></li>
+                        <li><a href="kusyemi.html">🦜 Kuş Yemi</a></li>
+                    </ul>
+                </li>
+                <li><a href="iletişim.html">İletişim</a></li>
+                <li><a href="hakkimizda.html">Hakkımızda</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <a href="KusYemi/urun24.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="resimler/vitakraft-menu-muhabbet-yemi-1000-gr-5-eaf4ed.jpg" alt="ürün1">
+                <p>
+                    Vitakraft Menu Muhabbet Yemi 1000 Gr 5 ADET
+                </p>
+            </div>
+        </a>
+        <a href="KusYemi/urun25.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="resimler/gold-wings-premium-meyveli-muhabbet-ku-061a-5.jpg" alt="Kedi Kumu">
+                <p>Gold Wings Premium Meyveli Muhabbet Kuşu Yemi 1 kg</p>
+            </div>
+        </a>
+        <a href="KusYemi/urun26.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="resimler/gold-wings-premium-yavru-muhabbet-yemi-706-9b.jpg" alt="Kedi Kumu">
+                <p>Gold Wings Premium Yavru Muhabbet Yemi 1 kg</p>
+            </div>
+        </a>
+        <a href="KusYemi/urun27.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="resimler/eurogold-konusturucu-yem-katkisi-150-g-ece-85.jpg" alt="Kedi Kumu">
+                <p>EuroGold Konuşturucu Yem Katkısı 150 Gr</p>
+            </div>
+        </a>
+        <a href="KusYemi/urun28.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="resimler/jungle-muhabbet-kusu-yemi-poset-1-kgju-a5df80.jpg" alt="Kedi Kumu">
+                <p>Jungle Muhabbet Kuşu Yemi Poşet 1 kg</p>
+            </div>
+        </a>
+        <a href="KusYemi/urun29.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="resimler/garden-mix-platin-yavru-muhabbet-kus-y-5d9193.jpg" alt="Kedi Kumu">
+                <p>Garden Mix Platin Yavru Muhabbet Kuş Yemi 500 gr</p>
+            </div>
+        </a>
+    </section>
+    <footer>
+        <p>&copy; 2025 PetShop. Tüm hakları saklıdır.</p>
+    </footer>
+</body>
+</html>

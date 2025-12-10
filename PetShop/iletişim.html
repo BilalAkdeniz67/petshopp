@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim - PetShop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header, .contact-container, footer {
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: slideDown 0.8s ease-out forwards;
+        }
+
+        header {
+            animation-delay: 0.1s;
+        }
+
+        .contact-container {
+            animation-delay: 0.3s;
+        }
+
+        footer {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1% 0; 
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap; 
+        }
+
+        .logo {
+            margin-left: 2%; 
+            cursor: pointer;
+        }
+
+        .logo img {
+            height: 70px; 
+            width: auto;
+            transition: transform 0.9s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.1);
+        }
+
+        nav {
+            margin-left: auto;
+            margin-right: 2%; 
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap; 
+            gap: 2vw; 
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: clamp(12px, 1.2vw, 16px); 
+        }
+
+        .urunsecme {
+            position: relative; 
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%; 
+            left: 0;
+            background-color: #444;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 10000;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            padding-top: 5px;
+            margin-top: 0;
+        }
+        .urunsecme:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-menu:hover {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-menu li {
+            list-style: none;
+            margin: 0;
+        }
+        .dropdown-menu li a {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        .dropdown-menu li a:hover {
+            background-color: #555;
+            padding-left: 25px;
+        }
+        .urunsecme > a {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .urunsecme > a::after {
+            content: '▼';
+            font-size: 10px;
+            transition: transform 0.3s ease;
+        }
+        .urunsecme:hover > a::after {
+            transform: rotate(180deg);
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            min-height: 60vh;
+        }
+
+        .contact-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+
+        .contact-content {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .info-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #3649b4;
+        }
+
+        .info-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .info-item p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .contact-form h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #4b4a4a;
+        }
+
+        footer p {
+            text-align: center;
+            padding: 2%; 
+            background-color: #333;
+            color: white;
+            margin-top: 50px;
+            font-size: clamp(12px, 1.2vw, 14px); 
+        }
+
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 3% 0; 
+            }
+
+            .logo {
+                margin: 0 0 2% 0; 
+            }
+
+            .logo img {
+                height: 50px; 
+            }
+
+            nav {
+                margin: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            nav ul {
+                justify-content: center;
+                gap: 3vw; 
+            }
+
+            nav ul li {
+                margin: 0;
+            }
+
+            nav ul li a {
+                font-size: 14px;
+            }
+            
+            .contact-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .contact-container h1 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 40px; 
+            }
+
+            nav ul li a {
+                font-size: 12px;
+            }
+            
+            .contact-container {
+                padding: 15px;
+                margin: 15px;
+            }
+
+            .contact-container h1 {
+                font-size: 24px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <a href="anasayfa.html" style="text-decoration: none;">
+            <div class="logo">
+                <img src="resimler/PhotoshopExtension_Image.png" alt="logo">
+            </div>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="anasayfa.html">Anasayfa</a></li>
+                <li class="urunsecme">
+                    <a href="#">Ürünler</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="kedimamasi.html">🐱 Kedi Maması</a></li>
+                        <li><a href="kopekmamasi.html">🐶 Köpek Maması</a></li>
+                        <li><a href="kedikumu.html">🪣 Kedi Kumu</a></li>
+                        <li><a href="kusyemi.html">🦜 Kuş Yemi</a></li>
+                    </ul>
+                </li>
+                <li><a href="iletişim.html">İletişim</a></li>
+                <li><a href="hakkimizda.html">Hakkımızda</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="contact-container">
+        <h1>İletişim</h1>
+        
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="info-item">
+                    <h3>📍 Adres</h3>
+                    <p>Atatürk Mahallesi, Pet Sokak No:123<br>İstanbul, Türkiye</p>
+                </div>
+
+                <div class="info-item">
+                    <h3>📞 Telefon</h3>
+                    <p>+90 (212) 555 01 23<br>+90 (555) 123 45 67</p>
+                </div>
+
+                <div class="info-item">
+                    <h3>📧 E-posta</h3>
+                    <p>info@petshop.com<br>destek@petshop.com</p>
+                </div>
+
+                <div class="info-item">
+                    <h3>🕐 Çalışma Saatleri</h3>
+                    <p>Pazartesi - Cumartesi: 09:00 - 19:00<br>Pazar: 10:00 - 17:00</p>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2>Bize Ulaşın</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Adınız Soyadınız</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-posta Adresiniz</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Telefon Numaranız</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Mesajınız</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Gönder</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 PetShop. Tüm hakları saklıdır.</p>
+    </footer>
+</body>
+</html>
