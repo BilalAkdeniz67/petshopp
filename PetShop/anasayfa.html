@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petshop - Anasayfa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+        
+        header, section, footer {
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: slideDown 0.8s ease-out forwards;
+        }
+
+        header { animation-delay: 0.1s; }
+        section { animation-delay: 0.3s; }
+        footer { animation-delay: 0.5s; }
+
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1% 2%;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between; 
+        }
+        
+        .main-nav-area {
+            display: flex;
+            align-items: center;
+            flex-grow: 1; 
+            justify-content: center; 
+            gap: 40px;
+        }
+        nav {
+            margin: 0;
+        }
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: clamp(14px, 1.2vw, 16px);
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #ff9900;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background-color: #555;
+            max-width: 350px; 
+            min-width: 200px;
+        }
+        .search-input {
+            border: none;
+            outline: none;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            width: 100%;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+        .search-button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        .search-button:hover {
+            color: #ff9900;
+        }
+        
+        .urunsecme { 
+            position: relative; 
+        }
+        .dropdown-menu {
+            position: absolute; 
+            top: 100%; left: 0; 
+            background-color: #444; 
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+            border-radius: 5px; opacity: 0;
+            visibility: hidden; 
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 10000;
+            list-style: none; 
+            padding: 5px 0; 
+            margin: 0;
+        }
+        .urunsecme:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-menu li a {
+            display: block; 
+            padding: 10px 20px; 
+            color: white; 
+            font-size: 14px;
+            transition: background-color 0.3s ease, padding-left 0.3s ease;
+        }
+        .dropdown-menu li a:hover {
+            background-color: #555; 
+            padding-left: 25px; 
+            color: #ff9900;
+        }
+        .urunsecme > a { 
+            display: flex; 
+            align-items: 
+            center; 
+            gap: 5px; 
+        }
+        .urunsecme > a::after { content: '▼'; font-size: 10px; transition: transform 0.3s ease; }
+        .urunsecme:hover > a::after { transform: rotate(180deg); }
+        
+        .urunler {
+            padding: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;
+            margin: 10px; width: 280px; display: flex; flex-direction: column; align-items: center;
+            transition: box-shadow 0.3s ease, transform 0.3s ease; background-color: white; 
+            min-height: 200px;
+        }
+        .urunler:hover {
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); transform: scale(1.03); cursor: pointer;
+        }
+        .urunler img {
+            width: 100%; max-width: 200px; height: auto; border-radius: 8px;
+            transition: transform 0.6s ease; object-fit: contain; margin-bottom: 10px;
+        }
+        .urunler:hover img { transform: scale(1.05); }
+        .urunler p {
+            margin-top: 10px; font-size: 15px; font-weight: 600; text-align: center; padding: 0 5%;
+        }
+        
+        section {
+            display: flex; justify-content: center; align-items: stretch; padding: 20px 2%;
+            flex-wrap: wrap; max-width: 1400px; margin: 20px auto;
+        }
+        section a {
+            text-decoration: none; color: inherit; display: flex;
+        }
+
+        footer {
+            background-color: #333; color: white; padding: 20px 2%; font-size: 14px; margin-top: 30px;
+        }
+        footer p {
+            text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .main-nav-area {
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+            }
+            .search-box {
+                order: -1; 
+                max-width: 100%;
+                width: 100%;
+            }
+            nav ul {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 3% 2%;
+            }
+            .logo {
+                margin: 0 0 15px 0;
+            }
+            nav ul {
+                gap: 15px;
+            }
+            .urunler {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 40px;
+            }
+            .urunler {
+                width: calc(100% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="anasayfa.html" class="logo">
+            <img src="/resimler/PhotoshopExtension_Image.png" alt="Sence Petshop Logo">
+        </a>
+        
+        <div class="main-nav-area">
+            <form class="search-box" action="/arama.html" method="get">
+                <input type="text" class="search-input" name="q" placeholder="Arama Yapınız" required>
+                <button type="submit" class="search-button">🔍</button>
+            </form>
+
+            <nav>
+                <ul>
+                    <li><a href="anasayfa.html">Anasayfa</a></li>
+                    <li class="urunsecme">
+                        <a href="#">Ürünler</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="kedimamasi.html">🐱 Kedi Maması</a></li>
+                            <li><a href="kopekmamasi.html">🐶 Köpek Maması</a></li>
+                            <li><a href="kedikumu.html">🪣 Kedi Kumu</a></li>
+                            <li><a href="kusyemi.html">🦜 Kuş Yemi</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="iletişim.html">İletişim</a></li>
+                    <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section>
+        <a href="KediMamasiUrunler/urun1.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/indir.png" alt="Acana Kedi Maması">
+                <p>Acana Indoor Entree Sterilised Kısırlaştırılmış Kedi Maması 1,8 kg</p>
+            </div>
+        </a>
+        <a href="KediMamasiUrunler/urun2.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler"> 
+                <img src="/resimler/indir (1).png" alt="Acana Kedi Maması">
+                <p>Acana Pacifica Balıklı Tahılsız Kuru Kedi Maması 4,5 kg</p>
+            </div>
+        </a>
+        <a href="KediMamasiUrunler/urun3.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/acana-first-feast-tavuklu-ve-balikli-y-9d564d.jpg" alt="Acana Yavru Kedi Maması">
+                <p>Acana First Feast Tavuklu ve Balıklı Yavru Kedi Maması 1,8 kg</p>
+            </div>
+        </a>
+        <a href="KediMamasiUrunler/urun4.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/acana-homestead-harvest-tavuklu-yetisk-d058e8.jpg" alt="Acana Kedi Maması">
+                <p>Acana Homestead Harvest Tavuklu Yetişkin Kuru Kedi Maması 4,5 kg</p>
+            </div>
+        </a>
+        <a href="/KopekMamasiUrunler/urun5.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/brit-care-sensitive-digestion-skin-gey--a82c8.jpg" alt="Brit Care Köpek Maması">
+                <p>Brit Care Sensitive Digestion-Skin Geyikli Tahılsız Yetişkin Köpek Maması 3 kg</p>
+            </div>
+        </a>
+        <a href="/KopekMamasiUrunler/urun6.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/pro-plan-kucuk-ve-mini-irk-somonlu-yet-b3c1-4.jpg" alt="Pro Plan Köpek Maması">
+                <p>Pro Plan Küçük ve Mini Irk Somonlu Yetişkin Köpek Maması 3 kg</p>
+            </div>
+        </a>
+        <a href="KediMamasiUrunler/urun7.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/pro-plan-elegant-optiderma-somonlu-yet-8-3125.jpg" alt="Pro Plan Kedi Maması">
+                <p>Pro Plan Elegant Optiderma Somonlu Yetişkin Kedi Maması 10 kg</p>
+            </div>
+        </a>
+        <a href="KediMamasiUrunler/urun8.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/pro-plan-adult-somonlu-yetiskin-kedi-m-0d-072.jpg" alt="Pro Plan Kedi Maması">
+                <p>Pro Plan Adult Somonlu Yetişkin Kedi Maması 3 kg</p>
+            </div>
+        </a>
+        <a href="KopekMamasiUrunler/urun9.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/nd-tahilsiz-balkabakli-kuzulu-ve-yaban-12-42c.jpg" alt="N&D Köpek Maması">
+                <p>N&D Tahılsız Balkabaklı Kuzulu ve Yaban Mersinli Orta ve Büyük Irk Köpek Maması 12 kg</p>
+            </div>
+        </a>
+        <a href="KopekMamasiUrunler/urun10.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/nd-tropical-selection-kuzu-etli-ve-tro-7b3669.jpg" alt="N&D Köpek Maması">
+                <p>N&D Tropical Selection Kuzu Etli ve Tropikal Meyveli Orta ve Büyük Irk Yetişkin Köpek Maması 10 kg</p>
+            </div>
+        </a>
+        <a href="KopekMamasiUrunler/urun11.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/paw-paw-pate-balikli-yetiskin-kopek-ko-46f8-b.jpg" alt="Paw Paw Köpek Konserve">
+                <p>Paw Paw Pate Balıklı Yetişkin Köpek Konserve Maması 400 gr 24 Adet</p>
+            </div>
+        </a>
+        <a href="KopekMamasiUrunler/urun12.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/royal-canin-french-bulldog-adult-yetis-d88ce5.jpg" alt="Royal Canin Köpek Maması">
+                <p>Royal Canin French Bulldog Adult Yetişkin Köpek Maması 3 kg</p>
+            </div>
+        </a>
+        <a href="KopekMamasiUrunler/urun13.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/royal-canin-maxi-dermacomfort-buyuk-ir-9d-88e.jpg" alt="Royal Canin Köpek Maması">
+                <p>Royal Canin Maxi Dermacomfort Büyük Irk Köpek Maması 12 kg</p>
+            </div>
+        </a>
+        <a href="KopekMamasiUrunler/urun14.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/royal-canin-giant-adult-yetiskin-dev-i--456c-.jpg" alt="Royal Canin Köpek Maması">
+                <p>Royal Canin Giant Adult Yetişkin Dev Irk Köpek Maması 15 kg</p>
+            </div>
+        </a>
+        <a href="KopekMamasiUrunler/urun15.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/royal-canin-pomeranian-yetiskin-kopek--26a20c.jpg" alt="Royal Canin Köpek Maması">
+                <p>Royal Canin Pomeranian Yetişkin Köpek Maması 3 kg</p>
+            </div>
+        </a>
+        <a href="KediKumuUrunler/urun16.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/cats-white-aktif-karbonlu-kedi-kumu-10-97f2fe.jpg" alt="Kedi Kumu">
+                <p>Cat's White Aktif Karbonlu Kedi Kumu 10 lt 2 Adet</p>
+            </div>
+        </a>
+        <a href="KediKumuUrunler/urun17.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/cats-white-kokusuz-kedi-kumu-10-lt-2-a-5a-2d7.jpg" alt="Kedi Kumu">
+                <p>Cat's White Kokusuz Kedi Kumu 10 lt 2 Adet</p>
+            </div>
+        </a>
+        <a href="KediKumuUrunler/urun18.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/cats-white-lavanta-kokulu-kedi-kumu-10--fc97a.jpg" alt="Kedi Kumu">
+                <p>Cat's White Lavanta Kokulu Kedi Kumu 10 lt 2 Adet</p>
+            </div>
+        </a>
+        <a href="KediKumuUrunler/urun19.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/cats-white-pudrali-kedi-kumu-10-lt-2-a-2-42d5.jpg" alt="Kedi Kumu">
+                <p>Cat's White Pudralı Kedi Kumu 10 lt 2 Adet</p>
+            </div>
+        </a>
+        <a href="KediKumuUrunler/urun20.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/cats-white-sabunlu-kedi-kumu-10-lt-2-a-461a-a.jpg" alt="Kedi Kumu">
+                <p>Cat's White Sabunlu Kedi Kumu 10 lt 2 Adet</p>
+            </div>
+        </a>
+        <a href="KediKumuUrunler/urun21.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/cats-white-pudrali-kedi-kumu-5-lt-4-ad-baf4ea.jpg" alt="Kedi Kumu">
+                <p>Cat's White Pudralı Kedi Kumu 5 lt 4 Adet</p>
+            </div>
+        </a>
+        <a href="KediKumuUrunler/urun22.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/lindo-cat-topaklasan-lavantali-ince-ta-168122.jpg" alt="Kedi Kumu">
+                <p>Lindo Cat Topaklaşan Lavantalı İnce Taneli Bentonit Kedi Kumu 10 lt 2 Adet</p>
+            </div>
+        </a>
+        <a href="KediKumuUrunler/urun23.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler//reflex-clinic-idrar-yolu-hastaligi-onl-4f84-8.jpg" alt="Kedi Kumu">
+                <p>Reflex Clinic İdrar Yolu Hastalığı Önleyen Kedi Kumu 10 lt 2 Adet</p>
+            </div>
+        </a>
+        <a href="KusYemi/urun24.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/vitakraft-menu-muhabbet-yemi-1000-gr-5-eaf4ed.jpg" alt="Kedi Kumu">
+                <p>Vitakraft Menu Muhabbet Yemi 1000 Gr 5 ADET</p>
+            </div>
+        </a>
+        <a href="KusYemi/urun25.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/gold-wings-premium-meyveli-muhabbet-ku-061a-5.jpg" alt="Kedi Kumu">
+                <p>Gold Wings Premium Meyveli Muhabbet Kuşu Yemi 1 kg</p>
+            </div>
+        </a>
+        <a href="KusYemi/urun26.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/gold-wings-premium-yavru-muhabbet-yemi-706-9b.jpg" alt="Kedi Kumu">
+                <p>Gold Wings Premium Yavru Muhabbet Yemi 1 kg</p>
+            </div>
+        </a>
+        <a href="KusYemi/urun27.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/eurogold-konusturucu-yem-katkisi-150-g-ece-85.jpg" alt="Kedi Kumu">
+                <p>EuroGold Konuşturucu Yem Katkısı 150 Gr</p>
+            </div>
+        </a>
+        <a href="KusYemi/urun28.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/jungle-muhabbet-kusu-yemi-poset-1-kgju-a5df80.jpg" alt="Kedi Kumu">
+                <p>Jungle Muhabbet Kuşu Yemi Poşet 1 kg</p>
+            </div>
+        </a>
+        <a href="KusYemi/urun29.html" style="text-decoration: none; color: inherit;">
+            <div class="urunler">
+                <img src="/resimler/garden-mix-platin-yavru-muhabbet-kus-y-5d9193.jpg" alt="Kedi Kumu">
+                <p>Garden Mix Platin Yavru Muhabbet Kuş Yemi 500 gr</p>
+            </div>
+        </a>
+    </section>
+    <footer>
+        <p>&copy; 2025 Sence Petshop. Tüm hakları saklıdır.</p>
+    </footer>
+</body>
+</html>
